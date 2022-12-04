@@ -1,0 +1,35 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #D2EFFE; }
+	</style>
+{% endblock %}
+
+
+{% block title %}
+Playlist Predictor
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+
+      <h1 class="pt-5 pb-2">Welcome to Sabina's Spotify Playlist Predictor!</h1>
+
+      <p class="lead">This is the index page for my example Flask app using Bootstrap and WTForms for the Concordia DataScience Bootcamp. Note that the entire Spotify Database is not covered in the data source. Partial song names are not valid.</p>
+
+      {{ wtf.quick_form(form) }}
+
+      <p class="pt-5"><strong>{{ message }}</strong></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
