@@ -41,7 +41,7 @@ def index():
         # empty the form field
             form.song_input_field.data = ""
         # redirect the browser to another route and template
-        return redirect(url_for('playlist', name = name))
+        return redirect(url_for('playlist', song_name = name))
     else:
         message = "That song is not in our database."
     return render_template('index.html', song_names=song_names, form=form, message=message)
@@ -56,10 +56,9 @@ def playlist(song_name):
         return render_template('404.html'), 404
     else:
         # pass all the data for the selected song to the template
-        return render_template('playlist_display.html', playlist = playlist)
+        return render_template('playlist_display.html', playlist = playlist, song_name = song_name)
 
 # 2 routes to handle errors - they have templates too
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
