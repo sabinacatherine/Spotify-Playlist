@@ -5,8 +5,11 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+import pandas as pd
 from functions import get_playlist
-import song_names.csv as pt_concat
+import numpy as np
+
+pt_concat = pd.read_csv("https://github.com/sabinacatherine/Spotify-Playlist/blob/main/data/song_names.csv?raw=true")
 
 #initial form setup,initializing Flask app
 
@@ -23,7 +26,6 @@ class SongForm(FlaskForm):
     song_input_field = StringField('What is your favourite song?', validators=[DataRequired()])
     submit_field = SubmitField('Submit')
 
-
 # all Flask routes below
 
 @app.route('/', methods=['GET', 'POST'])
@@ -32,22 +34,24 @@ def index():
     # 'form' is the variable name used in this template: index.html
     form = SongForm()
     message = ""
+    song_names = pt_concat['SName']
     if form.validate_on_submit():
         name = form.song_input_field.data
-        if name in pt_concat['SName']:
-            # empty the form field
+        if name in song_names:
+        # empty the form field
             form.song_input_field.data = ""
-            # redirect the browser to another route and template
-            return redirect(url_for('song'))
-        else:
-            message = "That song is not in our database."
-    return render_template('index.html', name=name, form=form, message=message)
+        # redirect the browser to another route and template
+        return redirect(url_for('playlist', name = name))
+    else:
+        message = "That song is not in our database."
+    return render_template('index.html', song_names=song_names, form=form, message=message)
 
-@app.route('/song')
-def playlist(name):
+@app.route('/playlist/<song_name>')
+def playlist(song_name):
+    song_name = song_name
     # run function to get playlist data
-    playlist = get_playlist(name)
-    if name == "Unknown":
+    playlist = get_playlist(song_name)
+    if song_name == "Unknown":
         # redirect the browser to the error template
         return render_template('404.html'), 404
     else:
@@ -63,7 +67,6 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
-
 
 # keep this as is
 if __name__ == '__main__':
