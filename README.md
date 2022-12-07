@@ -29,4 +29,4 @@ I deployed my model as an interactive web form which returns a list of songs. We
 ![](https://github.com/sabinacatherine/Spotify-Playlist/blob/main/images/Screen%20Shot%202022-12-05%20at%2010.35.01%20AM.png)
 
 ## Next steps
-As next steps I would like to improve on the indexing function for the Flask app, as I have encountered some indexing issues that were not present in the workbook alone. I would also like to round out the integration with the Spotify API.
+As next steps I would like to improve on the indexing function for the Flask app, as I have encountered some indexing issues that were not present in the workbook alone. I would also like to round out the integration with the Spotify API and modify the HTML styling to return a more structured list on the front end.
